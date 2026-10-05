@@ -1,11 +1,52 @@
-<div class="d-grid gap-2 d-sm-flex justify-content-sm-center mt-4">
-    {% if user.is_authenticated %}
-        <div class="alert alert-success w-100">
-            Siz muvaffaqiyatli tizimga kirgansiz! Profilingiz tasdiqlanish jarayonida.
-        </div>
-    {% else %}
-        <a href="{% url 'register_student' %}" class="btn btn-primary btn-lg px-4 me-sm-3">Talaba bo'lib ro'yxatdan o'tish</a>
-        <a href="{% url 'register_teacher' %}" class="btn btn-outline-primary btn-lg px-4 me-sm-3">O'qituvchi bo'lib ro'yxatdan o'tish</a>
-        <a href="{% url 'login' %}" class="btn btn-dark btn-lg px-4">Kirish</a>
-    {% endif %}
+{% extends 'base.html' %}
+
+{% block title %}Bosh sahifa - EduPlatform{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center text-center py-5">
+    <div class="col-md-8">
+        <h1 class="display-4 fw-bold text-dark mb-3">EduPlatform-ga xush kelibsiz!</h1>
+        <p class="lead text-muted mb-4">Talabalar va o'qituvchilar uchun yagona va qulay ta'lim platformasi.</p>
+        
+        {% if not user.is_authenticated %}
+            <div class="card shadow-sm border-0 p-4 mt-4">
+                <h4 class="mb-4 text-secondary">Davom etish uchun variantlardan birini tanlang:</h4>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{% url 'login' %}" class="btn btn-success btn-lg px-4">Tizimga Kirish</a>
+                    
+                    <button type="button" class="btn btn-primary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#registerModal">
+                        Ro'yxatdan O'tish
+                    </button>
+                </div>
+            </div>
+
+            <!-- Ro'yxatdan o'tish tanlovi oynasi (Modal) -->
+            <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title fw-bold">Kim sifatida ro'yxatdan o'tasiz?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body p-4">
+                            <div class="d-grid gap-3">
+                                <a href="{% url 'register_student' %}" class="btn btn-outline-primary btn-lg fw-semibold">
+                                    👨‍🎓 Talaba sifatida
+                                </a>
+                                <a href="{% url 'register_teacher' %}" class="btn btn-outline-success btn-lg fw-semibold">
+                                    👨‍🏫 O'qituvchi sifatida
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-success mt-4">
+                <h4>Xush kelibsiz, {{ user.username }}!</h4>
+                <p class="mb-0">Siz muvaffaqiyatli tizimga kirdingiz.</p>
+            </div>
+        {% endif %}
+    </div>
 </div>
+{% endblock %}

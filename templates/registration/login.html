@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Kirish - EduPlatform{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card p-4">
+            <h3 class="text-center fw-bold mb-4" style="color: #4f46e5;">Tizimga kirish</h3>
+            
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    Loginingiz yoki parolingiz noto'g'ri. Qayta urinib ko'ring.
+                </div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Foydalanuvchi nomi</label>
+                    <input type="text" name="username" class="form-control form-control-lg" required placeholder="Username kiriting">
+                </div>
+                <div class="mb-4">
+                    <label class="form-label font-weight-bold">Parol</label>
+                    <input type="password" name="password" class="form-control form-control-lg" required placeholder="Parolingizni kiriting">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100 rounded-3 mb-3">Kirish</button>
+            </form>
+            <div class="text-center">
+                <small class="text-muted">Hisobingiz yo'qmi? <a href="{% url 'register' %}" class="text-decoration-none">Ro'yxatdan o'ting</a></small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
